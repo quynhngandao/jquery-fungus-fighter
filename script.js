@@ -1,6 +1,7 @@
 /*
+- onReady(), 4x handleButton(), render()
 yes - update state variable(s) to make the Freaky Fungus lose hit points (HP), and to reduce your attack points (AP).
-NO - HP and AP values may not be negative (set to zero, if they would otherwise be negative)
+Yes - HP and AP values may not be negative (set to zero, if they would otherwise be negative)
 yes - Render state changes to the DOM
 
 yes - Update the text above the attack buttons (eg, "100 AP")
@@ -23,17 +24,21 @@ function onReady() {
   // - Updates state which is ->
   // - Rendered to the DOM
 
+  // event listener to handle each button of each attacks
+  // NOTE: class="attack-btn arcane-scepter"
+  // use .arcane-scepter not .attack-btn arcane-scepter
   $(".arcane-scepter").on("click", handleAParcane);
   $(".entangle").on("click", handleAPentangle);
   $(".dragon-blade").on("click", handleAPdragon);
   $(".star-fire").on("click", handleAPstar);
 }
 
+// handle button function for each attacks 
 function handleAParcane() {
-  // update AP
+  // update AP state 
   AP -= 12;
   fungusHP -= 14;
-  // update HP
+  // update HP state 
   console.log("AP count arcane", AP);
   console.log("HP count arcane", fungusHP);
   // AP and HP cannot be negative
@@ -44,6 +49,7 @@ function handleAParcane() {
     fungusHP = 0;
   }
 
+  // render AP and HP to DOM
   render();
 }
 
@@ -95,11 +101,12 @@ function handleAPstar() {
   render();
 }
 
+// render function
 function render() {
-  // update meter value
-  $("#ap-meter").val(AP);
+  // update meter in div value
+  $("#ap-meter").val(`${AP}`);
   $("#hp-meter").val(`${fungusHP}`);
-  // update text to value
+  // update text in div to value
   $(".ap-text").text(`${AP}`);
   $(".hp-text").text(fungusHP);
 
@@ -107,6 +114,8 @@ function render() {
   if (AP <= 0) {
     $(".freaky-fungus").removeClass("walk").addClass("jump");
     // disable button when AP and fungusHP count = 0
+    // NOTE: class= attack-btn arcane-scepter
+    // use .attack-btn not .attack-btn arcane-scepter
     $(".attack-btn").prop("disabled", true);
   } else if (fungusHP <= 0) {
     $(".freaky-fungus").removeClass("walk").addClass("dead");
