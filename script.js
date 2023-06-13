@@ -1,5 +1,6 @@
 /*
 - onReady(), 4x handleButton(), render()
+- Handle events that -> Updates state which is -> Rendered to the DOM
 yes - update state variable(s) to make the Freaky Fungus lose hit points (HP), and to reduce your attack points (AP).
 Yes - HP and AP values may not be negative (set to zero, if they would otherwise be negative)
 yes - Render state changes to the DOM
@@ -14,16 +15,10 @@ yes - You may no longer attack, if AP is 0. Give all of the attack buttons a dis
 $(document).ready(onReady);
 
 // State Variables can be declared outside of the onReady
-// Feel free to make this to what you want!
-// Example:
 let fungusHP = 100;
 let AP = 100;
 
 function onReady() {
-  // - Handle events that ->
-  // - Updates state which is ->
-  // - Rendered to the DOM
-
   // event listener to handle each button of each attacks
   // NOTE: class="attack-btn arcane-scepter"
   // use .arcane-scepter not .attack-btn arcane-scepter
