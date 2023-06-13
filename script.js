@@ -1,16 +1,10 @@
 /*
-Handle click events:
+yes - update state variable(s) to make the Freaky Fungus lose hit points (HP), and to reduce your attack points (AP).
+NO - HP and AP values may not be negative (set to zero, if they would otherwise be negative)
+yes - Render state changes to the DOM
 
-When you click an attack button:
-
-update state variable(s) to make the Freaky Fungus lose hit points (HP), and to reduce your attack points (AP).
-See Attacks below, for the AP and HP values of each attack
-State may be held in one our more variables of your choosing
-HP and AP values may not be negative (set to zero, if they would otherwise be negative)
-Render state changes to the DOM
-
-Update the text above the attack buttons (eg, "100 AP")
-Update the text above the enemy fungus (eg, "100 HP")
+yes - Update the text above the attack buttons (eg, "100 AP")
+yes - Update the text above the enemy fungus (eg, "100 HP")
 yes - If the Freaky Fungus runs out of HP, the monster is dead and you win! Replace the walk class with a dead class on the freaky-fungus element, to make them fall over and die.
 yes - If you run out of AP, the monster wins and humanity is doomed 😢 Replace the walk class with a jump class on the freaky-fungus element, to make them jump for the glory of the fungal race.
 yes - You may no longer attack, if AP is 0. Give all of the attack buttons a disabled attribute, so they may no longer be used.
@@ -36,11 +30,21 @@ function onReady() {
 }
 
 function handleAParcane() {
+  // update AP
   AP -= 12;
   fungusHP -= 14;
+  // update HP
   console.log("AP count arcane", AP);
   console.log("HP count arcane", fungusHP);
-  //render();
+  // AP and HP cannot be negative
+  if (AP < 0) {
+    AP = 0;
+  }
+  if (fungusHP < 0) {
+    fungusHP = 0;
+  }
+
+  render();
 }
 
 function handleAPentangle() {
@@ -48,6 +52,14 @@ function handleAPentangle() {
   fungusHP -= 9;
   console.log("AP count entangle", AP);
   console.log("HP count entangle", fungusHP);
+
+  if (AP < 0) {
+    AP = 0;
+  }
+  if (fungusHP < 0) {
+    fungusHP = 0;
+  }
+
   render();
 }
 
@@ -56,6 +68,14 @@ function handleAPdragon() {
   fungusHP -= 47;
   console.log("AP count dragon", AP);
   console.log("HP count dragon", fungusHP);
+
+  if (AP < 0) {
+    AP = 0;
+  }
+  if (fungusHP < 0) {
+    fungusHP = 0;
+  }
+
   render();
 }
 
@@ -64,19 +84,29 @@ function handleAPstar() {
   fungusHP -= 25;
   console.log("AP count star", AP);
   console.log("HP count star", fungusHP);
+
+  if (AP < 0) {
+    AP = 0;
+  }
+  if (fungusHP < 0) {
+    fungusHP = 0;
+  }
+
   render();
 }
 
 function render() {
-  $(".ap-text").text(`${AP}`);
-  $(".hp-text").text(fungusHP);
+  // update meter value
   $("#ap-meter").val(AP);
   $("#hp-meter").val(`${fungusHP}`);
+  // update text to value
+  $(".ap-text").text(`${AP}`);
+  $(".hp-text").text(fungusHP);
 
-  // button distribute
+  // update CSS class
   if (AP <= 0) {
     $(".freaky-fungus").removeClass("walk").addClass("jump");
-// disable button 
+    // disable button when AP and fungusHP count = 0
     $(".attack-btn").prop("disabled", true);
   } else if (fungusHP <= 0) {
     $(".freaky-fungus").removeClass("walk").addClass("dead");
